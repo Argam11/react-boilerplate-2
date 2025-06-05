@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route } from 'react-router';
-import { MoviesList } from '@components/MoviesList';
-import { MovieDetails } from '@components/MovieDetails';
+import { BrowserRouter, Routes, Route } from "react-router";
+import { MoviesList } from "@components/MoviesList";
+import { MovieDetails } from "@components/MovieDetails";
 
 export const Router = () => {
   return (

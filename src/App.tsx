@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { CircularProgress, CssBaseline, Box, Divider } from '@mui/material';
-import { Header } from '@components/Header';
-import { ThemeMode } from '@/types/main';
-import { getInitialTheme } from '@helpers/getInitialTheme';
-import { Router } from './router';
-import './App.css';
+import { useEffect, useState } from "react";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CircularProgress, CssBaseline, Box, Divider } from "@mui/material";
+import { Header } from "@components/Header";
+import { ThemeMode } from "@/types/main";
+import { getInitialTheme } from "@helpers/getInitialTheme";
+import { Router } from "./router";
+import "./App.css";
 
 function App() {
   const initialTheme = getInitialTheme();
@@ -16,7 +16,7 @@ function App() {
     palette: {
       mode,
       background: {
-        default: mode === ThemeMode.Light ? '#ffffff' : '#242424',
+        default: mode === ThemeMode.Light ? "#ffffff" : "#242424",
       },
     },
   });
@@ -25,15 +25,15 @@ function App() {
     const newMode = mode === ThemeMode.Light ? ThemeMode.Dark : ThemeMode.Light;
 
     setMode(newMode);
-    document.documentElement.setAttribute('data-theme', newMode);
-    localStorage.setItem('theme-mode', newMode);
+    document.documentElement.setAttribute("data-theme", newMode);
+    localStorage.setItem("theme-mode", newMode);
   };
 
   useEffect(() => {
     if (initialTheme) {
       setIsThemeLoaded(true);
       setMode(initialTheme);
-      document.documentElement.setAttribute('data-theme', initialTheme);
+      document.documentElement.setAttribute("data-theme", initialTheme);
     }
   }, [initialTheme]);
 
@@ -41,10 +41,11 @@ function App() {
     return (
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
         <CircularProgress />
       </Box>
     );
@@ -52,7 +53,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ paddingTop: '60px' }}>
+      <Box sx={{ paddingTop: "60px" }}>
         <Header mode={mode} toggleTheme={toggleTheme} />
         <Router />
       </Box>

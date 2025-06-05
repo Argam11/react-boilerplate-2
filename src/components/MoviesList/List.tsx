@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router';
+import { useNavigate } from "react-router";
 import {
   Card,
   CardMedia,
@@ -7,39 +7,57 @@ import {
   Typography,
   Button,
   Grid,
-} from '@mui/material';
+} from "@mui/material";
 
 interface ListProps {
-  data: { id: string }[];
+  data: { id: string; title: string; overview: string; poster_path: string }[];
 }
 
 export const List = ({ data }: ListProps) => {
   const navigate = useNavigate();
 
   return (
-    <Grid container spacing={2} sx={{ marginTop: '20px' }}>
+    <Grid container spacing={2} sx={{ marginTop: "20px" }}>
       {data.map((item) => {
+        console.log("item", item);
+
         return (
-          <Grid size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
-            <Card sx={{ cursor: 'pointer' }} onClick={() => navigate(item.id)}>
+          <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+            <Card
+              sx={{ cursor: "pointer", height: "100%" }}
+              onClick={() => navigate(String(item.id))}
+            >
               <CardMedia
-                sx={{ height: 140 }}
-                image="/static/images/cards/contemplative-reptile.jpg"
-                title="green iguana"
+                sx={{ height: 300 }}
+                image={`https://image.tmdb.org/t/p/w342/${item.poster_path}`}
+                title={item.title}
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  Lizard
+                <Typography
+                  gutterBottom
+                  variant="h5"
+                  component="div"
+                  sx={{
+                    overflow: "hidden",
+                    whiteSpace: "nowrap",
+                    textOverflow: "ellipsis",
+                  }}
+                >
+                  {item.title}
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
+                <Typography
+                  variant="body2"
+                  sx={{
+                    color: "text.secondary",
+                    display: "-webkit-box",
+                    "-webkitBoxOrient": "vertical",
+                    "-webkitLineClamp": "4",
+                    overflow: "hidden",
+                  }}
+                >
+                  {item.overview}
                 </Typography>
               </CardContent>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
             </Card>
           </Grid>
         );
