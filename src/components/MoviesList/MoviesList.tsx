@@ -1,55 +1,50 @@
-import { Box, Divider } from "@mui/material";
-
+import InfiniteScroll from "react-infinite-scroll-component";
+import { FixedSizeList } from "react-window";
+import { Box, Divider, Typography } from "@mui/material";
+import { useMovies } from "@api/MoviesList/useMovies";
 import { SearchFilters } from "./SearchFilters";
 import { List } from "./List";
-import { useEffect, useState } from "react";
-
-const api_key = import.meta.env.VITE_MOVIE_API_KEY;
-
-const data = [
-  { id: "11" },
-  { id: "22" },
-  { id: "33" },
-  { id: "44" },
-  { id: "55" },
-  { id: "44" },
-  { id: "55" },
-  { id: "44" },
-  { id: "55" },
-  { id: "44" },
-  { id: "55" },
-  { id: "44" },
-  { id: "55" },
-  { id: "44" },
-  { id: "55" },
-  { id: "44" },
-  { id: "55" },
-  // { id: 44 },
-  // { id: 55 },
-];
+import { Loading } from "../Loading";
 
 export const MoviesList = () => {
-  const [data, setData] = useState([]);
+  const { data, isLoading, fetchNextPage, isFetchingNextPage } = useMovies();
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const data = await fetch(
-          `https://api.themoviedb.org/3/movie/popular?api_key=${api_key}&page=1`
-        ).then((res) => res.json());
-
-        setData(data.results);
-      } catch (error) {
-        console.error(error);
-      }
-    })();
-  }, []);
+  const Row = ({ index, style }) => {
+    const movie = data?.results[index];
+    return (
+      <div style={style}>
+        <List data={[movie]} />
+      </div>
+    );
+  };
 
   return (
     <Box sx={{ padding: "20px" }}>
+      {isLoading && <Loading />}
       <SearchFilters />
       <Divider sx={{ padding: "10px" }} />
-      <List data={data} />
+      <InfiniteScroll
+        dataLength={data?.results?.length || 0}
+        next={fetchNextPage}
+        hasMore={Boolean(data && data?.page !== data?.totalPages)}
+        loader={
+          isFetchingNextPage && (
+            <Typography sx={{ textAlign: "center", paddingTop: "20px" }}>
+              Loading...
+            </Typography>
+          )
+        }
+      >
+        {/* <List data={data?.results || []} /> */}
+        <FixedSizeList
+          height={800} // Adjust this value based on your needs
+          width="100%"
+          itemCount={data?.results?.length || 0}
+          itemSize={200} // Adjust this value based on your item height
+        >
+          {Row}
+        </FixedSizeList>
+      </InfiniteScroll>
     </Box>
   );
 };

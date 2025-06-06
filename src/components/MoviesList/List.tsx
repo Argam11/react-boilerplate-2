@@ -1,16 +1,9 @@
 import { useNavigate } from "react-router";
-import {
-  Card,
-  CardMedia,
-  CardActions,
-  CardContent,
-  Typography,
-  Button,
-  Grid,
-} from "@mui/material";
+import { Card, CardContent, Typography, Grid } from "@mui/material";
+import { Movie } from "@/api/types";
 
 interface ListProps {
-  data: { id: string; title: string; overview: string; poster_path: string }[];
+  data: Movie[];
 }
 
 export const List = ({ data }: ListProps) => {
@@ -19,18 +12,17 @@ export const List = ({ data }: ListProps) => {
   return (
     <Grid container spacing={2} sx={{ marginTop: "20px" }}>
       {data.map((item) => {
-        console.log("item", item);
-
         return (
           <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Card
               sx={{ cursor: "pointer", height: "100%" }}
               onClick={() => navigate(String(item.id))}
             >
-              <CardMedia
-                sx={{ height: 300 }}
-                image={`https://image.tmdb.org/t/p/w342/${item.poster_path}`}
-                title={item.title}
+              <img
+                style={{ height: 300, width: "100%", objectFit: "cover" }}
+                src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`}
+                alt={item.title}
+                loading="lazy"
               />
               <CardContent>
                 <Typography
@@ -50,8 +42,8 @@ export const List = ({ data }: ListProps) => {
                   sx={{
                     color: "text.secondary",
                     display: "-webkit-box",
-                    "-webkitBoxOrient": "vertical",
-                    "-webkitLineClamp": "4",
+                    WebkitBoxOrient: "vertical",
+                    WebkitLineClamp: "4",
                     overflow: "hidden",
                   }}
                 >

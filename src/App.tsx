@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { CircularProgress, CssBaseline, Box, Divider } from "@mui/material";
+import { Box } from "@mui/material";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Header } from "@components/Header";
+import { Loading } from "@components/Loading";
 import { ThemeMode } from "@/types/main";
 import { getInitialTheme } from "@helpers/getInitialTheme";
 import { Router } from "./router";
 import "./App.css";
+
+const queryClient = new QueryClient();
 
 function App() {
   const initialTheme = getInitialTheme();
@@ -38,25 +43,18 @@ function App() {
   }, [initialTheme]);
 
   if (!isThemeLoaded) {
-    return (
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return <Loading />;
   }
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ paddingTop: "60px" }}>
-        <Header mode={mode} toggleTheme={toggleTheme} />
-        <Router />
-      </Box>
+      <QueryClientProvider client={queryClient}>
+        <Box sx={{ paddingTop: "60px" }}>
+          <Header mode={mode} toggleTheme={toggleTheme} />
+          <Router />
+        </Box>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }
