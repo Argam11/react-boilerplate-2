@@ -1,97 +1,80 @@
-import { Box, Typography, IconButton, Button } from "@mui/material";
+import { useNavigate, useParams } from "react-router";
+import { Box, Typography, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import { useNavigate } from "react-router";
-import { Trailers } from "./Slider";
+import {
+  useMovieDetails,
+  useMovieCredits,
+  useMovieTrailers,
+} from "@/api/MovieDetails/useMovieDetails";
+import { Trailers } from "./Trailers";
+import { Loading } from "../Loading";
+import { MovieDetailsCard } from "./MovieDetailsCard";
 
-interface MovieDetailsProps {
-  title?: string;
-  description?: string;
-  backgroundImage?: string;
-}
-
-export const MovieDetails = ({
-  title = "Movie Title",
-  description = "Movie description goes here",
-  backgroundImage = "https://images.unsplash.com/photo-1575936123452-b67c3203c357?fm=jpg&q=60",
-}: MovieDetailsProps) => {
+export const MovieDetails = () => {
+  const { id = "" } = useParams<{ id: string }>();
+  const { data: movie, isLoading } = useMovieDetails(id);
+  const { data: credits } = useMovieCredits(id);
+  const { data: trailers } = useMovieTrailers(id);
   const navigate = useNavigate();
+
+  const trailersList = trailers?.results?.filter(
+    (trailer) =>
+      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key,
+  );
+
+  const casts = credits?.cast?.slice(0, 5) || [];
 
   const handleBack = () => {
     navigate(-1);
   };
 
+  if (isLoading) return <Loading />;
+
   return (
     <Box sx={{ padding: "20px" }}>
-      <Box
-        sx={{
-          position: "relative",
-          height: "calc(100vh - 400px)",
-        }}
-      >
+      <Box>
         <IconButton
           onClick={handleBack}
           sx={{
             color: (theme) => theme.palette.text.primary,
+            marginBottom: "20px",
           }}
         >
           <ArrowBackIcon />
         </IconButton>
         <Box
+          display="flex"
+          gap={2}
           sx={{
-            position: "absolute",
-            top: "40px",
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            "&::before": {
-              content: '""',
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-            },
-          }}
-        />
-        <Box
-          sx={{
-            position: "absolute",
-            padding: 3,
-            color: "white",
-            left: "100px",
-            bottom: "100px",
+            flexDirection: { xs: "column", md: "row" },
           }}
         >
-          <Typography
-            variant="h3"
-            component="h1"
-            sx={{
-              marginBottom: 2,
-              fontWeight: "bold",
-            }}
-          >
-            {title}
-          </Typography>
-          <Typography
-            variant="body1"
-            sx={{
-              maxWidth: "600px",
-            }}
-          >
-            {description}
-          </Typography>
-          <Button sx={{ marginTop: "20px" }} variant="contained">
-            Watch trailer
-          </Button>
+          <Box>
+            <img
+              style={{
+                height: "100%",
+                width: "100%",
+                objectFit: "cover",
+                minHeight: "300px",
+              }}
+              src={`https://image.tmdb.org/t/p/w342/${movie?.poster_path}`}
+              alt={movie?.title}
+              loading="lazy"
+            />
+          </Box>
+          <MovieDetailsCard data={movie} casts={casts} />
         </Box>
       </Box>
-      <Box sx={{ marginTop: "20px" }}>
+      <Box
+        sx={{
+          marginTop: "20px",
+          "& .slick-prev::before, & .slick-next::before": {
+            color: (theme) => theme.palette.text.primary,
+          },
+        }}
+      >
         <Typography variant="h4">Trailers</Typography>
-        <Trailers />
+        <Trailers data={trailersList} />
       </Box>
     </Box>
   );

@@ -1,16 +1,33 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { MOVIES_QUERY_KEY } from "./queryKeys";
 import { getMovies } from "./getMovies";
+import { MOVIES_QUERY_KEY } from "./queryKeys";
 
-export const useMovies = () => {
+interface UseMoviesParams {
+  search?: string;
+  genre?: number;
+}
+
+export const useMovies = ({ search, genre }: UseMoviesParams) => {
   return useInfiniteQuery({
-    queryKey: [MOVIES_QUERY_KEY],
+    queryKey: [MOVIES_QUERY_KEY, search, genre],
     queryFn: ({ pageParam }) => {
       const searchParams = new URLSearchParams({
         page: String(pageParam || 1),
       });
 
-      return getMovies({ searchParams });
+      let path = "movie/popular";
+
+      if (search) {
+        searchParams.set("query", search);
+        path = "search/movie";
+      }
+
+      if (genre) {
+        searchParams.set("with_genres", String(genre));
+        path = "discover/movie";
+      }
+
+      return getMovies({ path, searchParams });
     },
     initialPageParam: 1,
     getNextPageParam: (_lastPage, _pages, lastPageParam) => {

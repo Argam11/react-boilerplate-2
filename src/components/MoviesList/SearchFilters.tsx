@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useGenres } from "@api/GenresList/useGenres";
 import {
   Box,
   FormControl,
@@ -9,9 +9,21 @@ import {
   TextField,
 } from "@mui/material";
 
-export const SearchFilters = () => {
-  const [search, setSearch] = useState("");
-  const [genre, setGenre] = useState(0);
+interface SearchFiltersProps {
+  search?: string;
+  genre?: number;
+  onChangeSearch?: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onChangeGenre?: (event: SelectChangeEvent<number>) => void;
+}
+
+export const SearchFilters = ({
+  search,
+  genre,
+  onChangeSearch,
+  onChangeGenre,
+}: SearchFiltersProps) => {
+  const { data: genres } = useGenres();
+  const genresList = genres?.genres || [];
 
   return (
     <Box
@@ -22,12 +34,13 @@ export const SearchFilters = () => {
       }}
     >
       <TextField
+        type="search"
         id="outlined-basic"
         label="Search"
         variant="outlined"
         sx={{ width: "100%" }}
         value={search}
-        onChange={(e) => setSearch(e.target.value)}
+        onChange={onChangeSearch}
       />
       <FormControl sx={{ minWidth: "200px" }}>
         <InputLabel id="genre-select-label">Genre</InputLabel>
@@ -36,14 +49,21 @@ export const SearchFilters = () => {
           id="genre-select"
           label="Genre"
           value={genre}
-          onChange={(e: SelectChangeEvent<number>) => {
-            setGenre(e.target.value);
+          onChange={onChangeGenre}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                maxHeight: 300,
+              },
+            },
           }}
         >
           <MenuItem value={0}>All</MenuItem>
-          <MenuItem value={10}>Ten</MenuItem>
-          <MenuItem value={20}>Twenty</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {genresList.map((genre) => (
+            <MenuItem key={genre.id} value={genre.id}>
+              {genre.name}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
     </Box>

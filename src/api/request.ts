@@ -8,7 +8,7 @@ interface IRequestParams {
 const responseMock = [
   {
     id: 1,
-    title: "Movie Title",
+    title: "Movie Title 1",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -19,7 +19,7 @@ const responseMock = [
   },
   {
     id: 2,
-    title: "Movie Title",
+    title: "Movie Title 2",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -30,7 +30,7 @@ const responseMock = [
   },
   {
     id: 3,
-    title: "Movie Title",
+    title: "Movie Title 3",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -41,7 +41,7 @@ const responseMock = [
   },
   {
     id: 4,
-    title: "Movie Title",
+    title: "Movie Title 4",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -52,7 +52,7 @@ const responseMock = [
   },
   {
     id: 5,
-    title: "Movie Title",
+    title: "Movie Title 5",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -63,7 +63,7 @@ const responseMock = [
   },
   {
     id: 6,
-    title: "Movie Title",
+    title: "Movie Title 6",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -74,7 +74,7 @@ const responseMock = [
   },
   {
     id: 7,
-    title: "Movie Title",
+    title: "Movie Title 7",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -85,7 +85,7 @@ const responseMock = [
   },
   {
     id: 8,
-    title: "Movie Title",
+    title: "Movie Title 8",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -96,7 +96,7 @@ const responseMock = [
   },
   {
     id: 9,
-    title: "Movie Title",
+    title: "Movie Title 9",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -107,7 +107,7 @@ const responseMock = [
   },
   {
     id: 10,
-    title: "Movie Title",
+    title: "Movie Title 10",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -118,7 +118,7 @@ const responseMock = [
   },
   {
     id: 11,
-    title: "Movie Title",
+    title: "Movie Title 11",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -129,7 +129,7 @@ const responseMock = [
   },
   {
     id: 12,
-    title: "Movie Title",
+    title: "Movie Title 12",
     overview: "This is a movie overview.",
     release_date: "2023-01-01",
     poster_path: "/path/to/poster.jpg",
@@ -138,39 +138,6 @@ const responseMock = [
     vote_count: 1000,
     popularity: 10.0,
   },
-  // {
-  //   id: 13,
-  //   title: "Movie Title",
-  //   overview: "This is a movie overview.",
-  //   release_date: "2023-01-01",
-  //   poster_path: "/path/to/poster.jpg",
-  //   backdrop_path: "/path/to/backdrop.jpg",
-  //   vote_average: 8.5,
-  //   vote_count: 1000,
-  //   popularity: 10.0,
-  // },
-  // {
-  //   id: 14,
-  //   title: "Movie Title",
-  //   overview: "This is a movie overview.",
-  //   release_date: "2023-01-01",
-  //   poster_path: "/path/to/poster.jpg",
-  //   backdrop_path: "/path/to/backdrop.jpg",
-  //   vote_average: 8.5,
-  //   vote_count: 1000,
-  //   popularity: 10.0,
-  // },
-  // {
-  //   id: 15,
-  //   title: "Movie Title",
-  //   overview: "This is a movie overview.",
-  //   release_date: "2023-01-01",
-  //   poster_path: "/path/to/poster.jpg",
-  //   backdrop_path: "/path/to/backdrop.jpg",
-  //   vote_average: 8.5,
-  //   vote_count: 1000,
-  //   popularity: 10.0,
-  // },
 ];
 
 export async function request<TData>(
@@ -193,24 +160,24 @@ export async function request<TData>(
 
   url.search = searchParamsDefault.toString();
 
-  // const response = await fetch(url, {
-  //   ...options,
-  // });
+  const response = await fetch(url, {
+    ...options,
+  });
 
-  // if (!response.ok) {
-  //   const errorMessage = `Error ${response.status}: ${response.statusText}`;
-  //   const errorResponse = await response.json();
+  if (!response.ok) {
+    const errorMessage = `Error ${response.status}: ${response.statusText}`;
+    const errorResponse = await response.json();
 
-  //   throw new Error(errorMessage, {
-  //     cause: { ...errorResponse, status: response.status },
-  //   });
-  // }
+    throw new Error(errorMessage, {
+      cause: { ...errorResponse, status: response.status },
+    });
+  }
 
-  // if (response.status === 204) {
-  //   return null;
-  // }
+  if (response.status === 204) {
+    return null;
+  }
 
-  // return response.json();
+  return response.json();
 
   return new Promise((resolve) => {
     setTimeout(() => {

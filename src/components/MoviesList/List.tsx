@@ -9,17 +9,26 @@ interface ListProps {
 export const List = ({ data }: ListProps) => {
   const navigate = useNavigate();
 
+  const handleNavigate = (movieId: number) => {
+    navigate(`/${movieId}`);
+  };
+
   return (
     <Grid container spacing={2} sx={{ marginTop: "20px" }}>
-      {data.map((item) => {
+      {data.map((item, i) => {
         return (
-          <Grid key={item.id} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
+          <Grid key={i} size={{ xs: 12, sm: 6, md: 4, lg: 3 }}>
             <Card
               sx={{ cursor: "pointer", height: "100%" }}
-              onClick={() => navigate(String(item.id))}
+              onClick={() => handleNavigate(item.id)}
             >
               <img
-                style={{ height: 300, width: "100%", objectFit: "cover" }}
+                style={{
+                  height: 300,
+                  width: "100%",
+                  objectFit: "cover",
+                  minHeight: "300px",
+                }}
                 src={`https://image.tmdb.org/t/p/w342/${item.poster_path}`}
                 alt={item.title}
                 loading="lazy"
@@ -48,6 +57,22 @@ export const List = ({ data }: ListProps) => {
                   }}
                 >
                   {item.overview}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{
+                    marginTop: "10px",
+                    color: "rgba(255, 255, 255, 0.8)",
+                    fontStyle: "italic",
+                    fontSize: "0.9rem",
+                    display: "flex",
+
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <span>{item?.release_date}</span>
+                  <span>{Math.round(item?.vote_average * 10) / 10}</span>
                 </Typography>
               </CardContent>
             </Card>

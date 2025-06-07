@@ -1,0 +1,19 @@
+.slick-slider {
+  position: relative;
+
+  .slick-prev,
+  .slick-next {
+    top: -10px !important;
+    left: auto;
+    z-index: 1;
+    margin-bottom: -50px;
+  }
+
+  .slick-prev {
+    right: 35px !important;
+  }
+
+  .slick-next {
+    right: 10px !important;
+  }
+}

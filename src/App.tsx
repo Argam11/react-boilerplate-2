@@ -10,7 +10,13 @@ import { getInitialTheme } from "@helpers/getInitialTheme";
 import { Router } from "./router";
 import "./App.css";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 function App() {
   const initialTheme = getInitialTheme();
