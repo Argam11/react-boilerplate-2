@@ -17,9 +17,10 @@ export const Header = ({ mode, toggleTheme }: HeaderProps) => {
         justifyContent: "space-between",
         alignItems: "center",
         paddingInline: "20px",
-        position: "fixed",
+        position: "sticky",
+        left: 0,
         top: 0,
-        backgroundColor: (theme) => theme.palette.background.default,
+        backgroundColor: (theme) => theme.palette.background.paper,
         zIndex: "9999",
         maxWidth: "1280px",
       }}
@@ -29,7 +30,7 @@ export const Header = ({ mode, toggleTheme }: HeaderProps) => {
           fontSize: "40px",
         }}
       >
-        asd
+        Movie app
       </Typography>
       <IconButton
         sx={{

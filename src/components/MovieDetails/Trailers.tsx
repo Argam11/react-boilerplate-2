@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Slider from "react-slick";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Trailers.css";
@@ -22,7 +22,7 @@ interface Trailer {
 }
 
 interface TrailersProps {
-  data?: Trailer[];
+  data: Trailer[];
 }
 
 export const Trailers = ({ data }: TrailersProps) => {
@@ -36,10 +36,16 @@ export const Trailers = ({ data }: TrailersProps) => {
     setActiveTrailer(null);
   };
 
-  if (!data || data.length === 0) return null;
-
   return (
-    <>
+    <Box
+      sx={{
+        marginTop: "20px",
+        "& .slick-prev::before, & .slick-next::before": {
+          color: (theme) => theme.palette.text.primary,
+        },
+      }}
+    >
+      <Typography variant="h4">Trailers</Typography>
       {data.length === 1 ? (
         <Box
           sx={{ paddingBlock: "10px", outline: "none", cursor: "pointer" }}
@@ -82,6 +88,6 @@ export const Trailers = ({ data }: TrailersProps) => {
           onClose={handleClose}
         />
       )}
-    </>
+    </Box>
   );
 };

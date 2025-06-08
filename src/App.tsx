@@ -26,9 +26,6 @@ function App() {
   const theme = createTheme({
     palette: {
       mode,
-      background: {
-        default: mode === ThemeMode.Light ? "#ffffff" : "#242424",
-      },
     },
   });
 
@@ -55,7 +52,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Box sx={{ paddingTop: "60px" }}>
+        <Box>
           <Header mode={mode} toggleTheme={toggleTheme} />
           <Router />
         </Box>

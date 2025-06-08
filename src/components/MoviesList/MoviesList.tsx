@@ -1,11 +1,18 @@
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { Box, Divider, SelectChangeEvent, Typography } from "@mui/material";
+import { VirtuosoGrid } from "react-virtuoso";
+import { Box, SelectChangeEvent, Typography } from "@mui/material";
 import { useMovies } from "@api/MoviesList/useMovies";
 import { useDebounce } from "@hooks/useDebounce";
 import { SearchFilters } from "./SearchFilters";
-import { List } from "./List";
+import { List, Item } from "./List";
 import { Loading } from "../Loading";
+import { MovieCard } from "./MovieCard";
+
+const gridComponents = {
+  List,
+  Item,
+};
 
 export const MoviesList = () => {
   const [search, setSearch] = useState<string>("");
@@ -28,35 +35,52 @@ export const MoviesList = () => {
 
   return (
     <Box sx={{ padding: "20px" }}>
-      {isLoading && <Loading />}
       <SearchFilters
         search={search}
         genre={genre}
         onChangeSearch={onChangeSearch}
         onChangeGenre={onChangeGenre}
       />
-      <Divider sx={{ padding: "10px" }} />
-      <InfiniteScroll
-        dataLength={data?.results?.length || 0}
-        next={fetchNextPage}
-        hasMore={Boolean(data && data?.page !== data?.totalPages)}
-        loader={
-          isFetchingNextPage && (
-            <Typography sx={{ textAlign: "center", paddingTop: "20px" }}>
-              Loading more movies...
-            </Typography>
-          )
-        }
-        endMessage={
-          <Typography
-            sx={{ textAlign: "center", padding: "20px", fontWeight: "bold" }}
+      <Box marginTop={4}>
+        {isLoading ? (
+          <Loading mode="inline" />
+        ) : (
+          <InfiniteScroll
+            dataLength={data?.results?.length || 0}
+            next={fetchNextPage}
+            hasMore={Boolean(data && data?.page !== data?.totalPages)}
+            loader={
+              isFetchingNextPage && (
+                <Typography sx={{ textAlign: "center", paddingTop: "20px" }}>
+                  Loading more movies...
+                </Typography>
+              )
+            }
+            endMessage={
+              <Typography
+                sx={{
+                  textAlign: "center",
+                  padding: "20px",
+                  fontWeight: "bold",
+                }}
+              >
+                🎬 You've seen all available movies!
+              </Typography>
+            }
           >
-            🎬 You've seen all available movies!
-          </Typography>
-        }
-      >
-        <List data={data?.results || []} />
-      </InfiniteScroll>
+            <VirtuosoGrid
+              useWindowScroll
+              style={{ height: "100vh" }}
+              totalCount={data?.results?.length || 0}
+              components={gridComponents}
+              data={data?.results || []}
+              itemContent={(_index, data) => {
+                return <MovieCard item={data} />;
+              }}
+            />
+          </InfiniteScroll>
+        )}
+      </Box>
     </Box>
   );
 };

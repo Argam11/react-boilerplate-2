@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router";
-import { Box, Typography, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import {
   useMovieDetails,
@@ -9,6 +9,7 @@ import {
 import { Trailers } from "./Trailers";
 import { Loading } from "../Loading";
 import { MovieDetailsCard } from "./MovieDetailsCard";
+import { Image } from "../Image";
 
 export const MovieDetails = () => {
   const { id = "" } = useParams<{ id: string }>();
@@ -28,7 +29,7 @@ export const MovieDetails = () => {
     navigate(-1);
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading mode="inline" />;
 
   return (
     <Box sx={{ padding: "20px" }}>
@@ -50,32 +51,12 @@ export const MovieDetails = () => {
           }}
         >
           <Box>
-            <img
-              style={{
-                height: "100%",
-                width: "100%",
-                objectFit: "cover",
-                minHeight: "300px",
-              }}
-              src={`https://image.tmdb.org/t/p/w342/${movie?.poster_path}`}
-              alt={movie?.title}
-              loading="lazy"
-            />
+            <Image path={movie?.poster_path} title={movie?.title} />
           </Box>
           <MovieDetailsCard data={movie} casts={casts} />
         </Box>
       </Box>
-      <Box
-        sx={{
-          marginTop: "20px",
-          "& .slick-prev::before, & .slick-next::before": {
-            color: (theme) => theme.palette.text.primary,
-          },
-        }}
-      >
-        <Typography variant="h4">Trailers</Typography>
-        <Trailers data={trailersList} />
-      </Box>
+      {!!trailersList?.length && <Trailers data={trailersList} />}
     </Box>
   );
 };
