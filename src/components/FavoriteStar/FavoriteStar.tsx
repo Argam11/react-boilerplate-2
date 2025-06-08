@@ -1,5 +1,6 @@
 import { IconButton, Tooltip } from "@mui/material";
-import { Star, StarBorder } from "@mui/icons-material";
+import Star from "@mui/icons-material/Star";
+import StarBorder from "@mui/icons-material/StarBorder";
 import { FavoriteStarProps } from "./types";
 
 export const FavoriteStar = ({

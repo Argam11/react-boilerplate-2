@@ -35,6 +35,6 @@ describe("<MovieCard />", () => {
     render(<MovieCard item={mockMovie} />, { wrapper: MemoryRouter });
 
     fireEvent.click(screen.getByRole("button"));
-    expect(mockedNavigate).toHaveBeenCalledWith("/1");
+    expect(mockedNavigate).toHaveBeenCalledWith("/movie/1");
   });
 });

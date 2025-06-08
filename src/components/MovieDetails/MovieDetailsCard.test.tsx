@@ -10,6 +10,7 @@ const mockData: MovieDetailsApi = {
   overview: "A mind-bending thriller.",
   release_date: "2010-07-16",
   runtime: 148,
+  vote_average: 8,
   genres: [
     { id: 1, name: "Sci-Fi" },
     { id: 2, name: "Thriller" },

@@ -28,7 +28,7 @@ export const MovieDetails = () => {
 
   const trailersList = trailers?.results?.filter(
     (trailer) =>
-      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key,
+      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key
   );
 
   const casts = credits?.cast?.slice(0, 5) || [];
@@ -46,6 +46,7 @@ export const MovieDetails = () => {
       <Box sx={{ padding: "20px" }}>
         <Box>
           <IconButton
+            data-testid="movie-details-back-button"
             onClick={handleBack}
             sx={{
               color: (theme) => theme.palette.text.primary,

@@ -61,7 +61,7 @@ describe("<MovieDetails />", () => {
   it("renders back button and triggers navigation", () => {
     render(<MovieDetails />, { wrapper: MemoryRouter });
 
-    fireEvent.click(screen.getByRole("button"));
+    fireEvent.click(screen.getByTestId("movie-details-back-button"));
     expect(mockedNavigate).toHaveBeenCalledWith(-1);
   });
 });
