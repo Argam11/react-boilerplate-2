@@ -21,10 +21,10 @@ export default defineConfig({
     alias: {
       "@": path.resolve(__dirname, "src"),
       "@components": path.resolve(__dirname, "src/components"),
+      "@constants": path.resolve(__dirname, "src/constants"),
       "@helpers": path.resolve(__dirname, "src/helpers"),
       "@hooks": path.resolve(__dirname, "src/hooks"),
       "@api": path.resolve(__dirname, "src/api"),
-      "@constants": path.resolve(__dirname, "src/constants"),
     },
   },
 });

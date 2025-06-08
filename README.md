@@ -1,54 +1,152 @@
-# React + TypeScript + Vite
+# React Movie Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React application for browsing and managing movies, built with TypeScript and Vite.
 
-Currently, two official plugins are available:
+## 🌟 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🎬 Browse movies with a responsive grid layout
+- 🔍 Search and filter functionality
+- ⭐ Favorite movies management
+- 🎥 Movie details with trailers
+- 📱 Responsive design
+- 🌓 Light/Dark theme support
+- 🎬 YouTube video integration
+- ♿ Accessibility features
 
-## Expanding the ESLint configuration
+### Known API Limitations
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+⚠️ Important: The TMDB API (https://api.themoviedb.org) has some limitations:
+- No support for bulk movie fetching by IDs (you need to fetch movies one by one)
+- Related discussion: [TMDB Talk #668043](https://www.themoviedb.org/talk/668043dd9d585b6d60afe723)
+- Feature request tracking: [Trello Card](https://trello.com/c/lu5lFkB6/14-allow-querying-multiple-ids-at-once)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+To work around this API limitation, our application implements an efficient local storage solution:
+- Complete movie data is stored in localStorage when a user marks a movie as favorite
+- Favorite movies are retrieved directly from localStorage instead of making additional API calls
+- This approach eliminates the need for multiple API requests when displaying favorite movies
+
+## 🏗️ Architecture
+
+The application follows a clean and modular architecture:
+
+### Core Technologies
+- React with TypeScript
+- Vite as build tool
+- React Query for data fetching
+- React Router for navigation
+
+### Project Structure
+- `/src/api/` - API integration and hooks
+- `/src/components/` - Reusable UI components
+- `/src/hooks/` - Custom React hooks
+- `/src/constants/` - Application constants
+- `/src/helpers/` - Utility functions
+- `/src/types/` - TypeScript type definitions
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js (version 16 or higher)
+- npm or yarn
+- TMDB API Key (get it from [The Movie Database](https://www.themoviedb.org/))
+
+### Installation
+1. Clone the repository
+```bash
+git clone [repository-url]
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
 ```
+
+3. Start the development server
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+## 🧪 Testing
+
+The project includes comprehensive unit tests using Jest and React Testing Library.
+
+To run tests:
+```bash
+npm test
+# or
+yarn test
+```
+
+Test files are located next to their corresponding components with the `.test.tsx` extension.
+
+## 🔄 CI/CD
+
+Includes GitHub Actions workflow for:
+- TypeScript type checking
+- ESLint validation
+- Unit tests execution
+
+## 📝 Development Guidelines
+
+### Code Style
+- Follow TypeScript best practices
+- Use functional components with hooks
+- Implement proper error handling
+- Write meaningful component and function names
+
+### Component Structure
+- Maintain single responsibility principle
+- Create reusable components
+- Keep components small and focused
+- Use proper type definitions
+
+## 🎨 Theming
+
+The application supports light and dark themes:
+- Theme detection based on system preferences
+- Manual theme toggle
+- Persistent theme selection
+- Custom theme variables in CSS
+
+## 🔧 Configuration
+
+### Environment Variables
+Create a .env file in the root directory:
+```
+VITE_MOVIE_API_KEY=your_api_key
+```
+
+To get your TMDB API key:
+
+1. Create an account at [The Movie Database](https://www.themoviedb.org/)
+2. Go to your account settings
+3. Request an API key for developer use
+4. Copy the API key (v3 auth) and paste it as the value for `VITE_MOVIE_API_KEY`
+
+### Build Configuration
+- vite.config.ts - Vite configuration
+- tsconfig.json - TypeScript configuration
+- eslint.config.js - ESLint configuration
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
+
+### Commit Guidelines
+- Use conventional commits
+- Include meaningful commit messages
+- Reference issues in commits when applicable
+
+### Pull Request Process
+1. Update documentation if needed
+2. Add/update tests as required
+3. Ensure all tests pass
+4. Request review from maintainers
