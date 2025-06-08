@@ -41,8 +41,9 @@ export const SearchFilters = ({
           labelId="genre-select-label"
           id="genre-select"
           label="Genre"
-          value={genre}
+          value={search ? 0 : genre}
           onChange={onChangeGenre}
+          disabled={!!search}
           MenuProps={{
             PaperProps: {
               sx: {

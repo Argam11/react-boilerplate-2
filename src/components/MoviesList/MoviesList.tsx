@@ -65,13 +65,14 @@ export const MoviesList = () => {
                   fontWeight: "bold",
                 }}
               >
-                🎬 You've seen all available movies!
+                {data?.results?.length
+                  ? "🎬 You've seen all available movies!"
+                  : "🔍 No movies found!"}
               </Typography>
             }
           >
             <VirtuosoGrid
               useWindowScroll
-              style={{ height: "100vh" }}
               totalCount={data?.results?.length || 0}
               components={gridComponents}
               data={data?.results || []}

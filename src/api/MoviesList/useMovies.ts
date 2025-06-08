@@ -17,14 +17,14 @@ export const useMovies = ({ search, genre }: UseMoviesParams) => {
 
       let path = "movie/popular";
 
-      if (search) {
-        searchParams.set("query", search);
-        path = "search/movie";
-      }
-
       if (genre) {
         searchParams.set("with_genres", String(genre));
         path = "discover/movie";
+      }
+
+      if (search) {
+        searchParams.set("query", search);
+        path = "search/movie";
       }
 
       return getMovies({ path, searchParams });
