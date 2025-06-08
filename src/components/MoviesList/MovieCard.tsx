@@ -8,7 +8,7 @@ export const MovieCard = ({ item }: MovieCardProps) => {
   const navigate = useNavigate();
 
   const handleNavigate = (movieId: number) => {
-    navigate(`/${movieId}`);
+    navigate(`/movie/${movieId}`);
   };
 
   return (

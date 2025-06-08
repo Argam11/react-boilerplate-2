@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BrowserRouter } from "react-router";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Box } from "@mui/material";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -52,10 +53,12 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <QueryClientProvider client={queryClient}>
-        <Box>
-          <Header mode={mode} toggleTheme={toggleTheme} />
-          <Router />
-        </Box>
+        <BrowserRouter>
+          <Box>
+            <Header mode={mode} toggleTheme={toggleTheme} />
+            <Router />
+          </Box>
+        </BrowserRouter>
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </ThemeProvider>

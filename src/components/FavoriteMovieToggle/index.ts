@@ -1,0 +1,1 @@
+export { FavoriteMovieToggle } from "./FavoriteMovieToggle";

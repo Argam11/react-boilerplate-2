@@ -28,7 +28,7 @@ export const MovieDetails = () => {
 
   const trailersList = trailers?.results?.filter(
     (trailer) =>
-      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key
+      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key,
   );
 
   const casts = credits?.cast?.slice(0, 5) || [];
@@ -65,6 +65,7 @@ export const MovieDetails = () => {
               <Image
                 src={`${MOVIE_POSTER_SRC_BASE}${movie.poster_path}`}
                 title={movie?.title}
+                style={{ minWidth: 342 }}
               />
             </Box>
             <MovieDetailsCard data={movie} casts={casts} />

@@ -1,53 +1,38 @@
 import { Avatar, Box, Card, Typography } from "@mui/material";
 import { MovieDetailsCardProps } from "./types";
+import { FavoriteMovieToggle } from "@/components/FavoriteMovieToggle";
 
 export const MovieDetailsCard = ({ data, casts }: MovieDetailsCardProps) => {
   return (
-    <Card
-      sx={{
-        padding: 3,
-        flex: 1,
-      }}
-    >
-      <Typography
-        variant="h3"
-        component="h1"
-        sx={{
-          marginBottom: 2,
-          fontWeight: "bold",
-        }}
+    <Card sx={{ padding: 3, flex: 1 }}>
+      <Box
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        marginBottom={2}
       >
-        {data?.title}
-      </Typography>
+        <Typography variant="h3" component="h1" fontWeight="bold">
+          {data?.title}
+        </Typography>
+        {data?.id && <FavoriteMovieToggle movie={data} />}
+      </Box>
       <Typography variant="body1">{data?.overview}</Typography>
       <Typography
         variant="body1"
-        sx={{
-          marginTop: "10px",
-          fontStyle: "italic",
-          fontSize: "0.9rem",
-        }}
+        sx={{ marginTop: "10px", fontStyle: "italic", fontSize: "0.9rem" }}
       >
         Release date: {data?.release_date}
       </Typography>
       <Typography
         variant="body1"
-        sx={{
-          marginTop: "10px",
-          fontStyle: "italic",
-          fontSize: "0.9rem",
-        }}
+        sx={{ marginTop: "10px", fontStyle: "italic", fontSize: "0.9rem" }}
       >
         {data?.runtime &&
           `${Math.floor(data.runtime / 60)}h ${data.runtime % 60}m`}
       </Typography>
       <Typography
         variant="body1"
-        sx={{
-          marginTop: "10px",
-          fontStyle: "italic",
-          fontSize: "1rem",
-        }}
+        sx={{ marginTop: "10px", fontStyle: "italic", fontSize: "1rem" }}
       >
         {data?.genres?.map((genre) => genre.name).join(", ")}
       </Typography>

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { Box, IconButton, Typography } from "@mui/material";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
@@ -25,23 +26,34 @@ export const Header = ({ mode, toggleTheme }: HeaderProps) => {
         maxWidth: "1280px",
       }}
     >
-      <Typography
-        sx={{
-          fontSize: "40px",
+      <Link
+        to="/"
+        style={{
+          textDecoration: "none",
+          color: "inherit",
         }}
       >
-        Movie app
-      </Typography>
-      <IconButton
-        sx={{
-          height: "40px",
-        }}
-        color="inherit"
-        aria-label="toggle theme"
-        onClick={toggleTheme}
-      >
-        {mode === ThemeMode.Light ? <DarkModeIcon /> : <LightModeIcon />}
-      </IconButton>
+        <Typography variant="h3">Movie app</Typography>
+      </Link>
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Link
+          to="/favorites"
+          style={{
+            textDecoration: "none",
+            color: "inherit",
+          }}
+        >
+          <Typography>Favorites</Typography>
+        </Link>
+        <IconButton
+          sx={{ height: "40px" }}
+          color="inherit"
+          aria-label="toggle theme"
+          onClick={toggleTheme}
+        >
+          {mode === ThemeMode.Light ? <DarkModeIcon /> : <LightModeIcon />}
+        </IconButton>
+      </Box>
     </Box>
   );
 };

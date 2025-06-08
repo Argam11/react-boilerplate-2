@@ -6,7 +6,7 @@ import { useMovies } from "@api/MoviesList/useMovies";
 import { useDebounce } from "@hooks/useDebounce";
 import { SearchFilters } from "@components/SearchFilters";
 import { MovieGridItem } from "./MovieGridItem";
-import { Loading } from "../Loading";
+import { Loading } from "@components/Loading";
 import { MovieCard } from "./MovieCard";
 import { MovieGrid } from "./MovieGrid";
 

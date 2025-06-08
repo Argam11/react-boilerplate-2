@@ -31,6 +31,7 @@ export interface MovieDetailsApi {
   poster_path: string | null;
   release_date: string;
   runtime: number;
+  vote_average: number;
   genres: { id: number; name: string }[];
 }
 
