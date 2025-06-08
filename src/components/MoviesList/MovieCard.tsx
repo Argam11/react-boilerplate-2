@@ -2,7 +2,7 @@ import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import { Image } from "../Image";
 import { MovieCardProps } from "./types";
-import { MOVIE_POSTER_SRC_BASE } from "@/constants/common";
+import { MOVIE_POSTER_SRC_BASE } from "@constants/common";
 
 export const MovieCard = ({ item }: MovieCardProps) => {
   const navigate = useNavigate();

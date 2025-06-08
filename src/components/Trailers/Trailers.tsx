@@ -8,7 +8,7 @@ import { YouTubeVideoModal } from "@components/YouTubeVideoModal";
 import { Image } from "@components/Image";
 import { Trailer, TrailersProps } from "./types";
 import { SLICK_SLIDER_SETTINGS } from "./constants";
-import { YOUTUBE_THUMBNAIL_BASE_URL } from "@/constants/common";
+import { YOUTUBE_THUMBNAIL_BASE_URL } from "@constants/common";
 
 export const Trailers = ({ data }: TrailersProps) => {
   const [activeTrailer, setActiveTrailer] = useState<Trailer | null>(null);

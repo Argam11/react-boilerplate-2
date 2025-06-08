@@ -5,13 +5,13 @@ import {
   useMovieDetails,
   useMovieCredits,
   useMovieTrailers,
-} from "@/api/MovieDetails/useMovieDetails";
+} from "@api/MovieDetails/useMovieDetails";
 import { Loading } from "../Loading";
 import { MovieDetailsCard } from "./MovieDetailsCard";
 import { Image } from "../Image";
 import { Trailers } from "@components/Trailers";
-import { useRedirectToNotFound } from "@/hooks/useRedirectToNotFound";
-import { MOVIE_POSTER_SRC_BASE } from "@/constants/common";
+import { useRedirectToNotFound } from "@hooks/useRedirectToNotFound";
+import { MOVIE_POSTER_SRC_BASE } from "@constants/common";
 
 export const MovieDetails = () => {
   const navigate = useNavigate();
