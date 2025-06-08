@@ -28,7 +28,7 @@ export const MovieDetails = () => {
 
   const trailersList = trailers?.results?.filter(
     (trailer) =>
-      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key
+      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key,
   );
 
   const casts = credits?.cast?.slice(0, 5) || [];
