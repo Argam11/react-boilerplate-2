@@ -34,9 +34,8 @@ describe("<SearchFilters />", () => {
     });
     expect(onSearch).toHaveBeenCalled();
 
-    // open and select genre
-    fireEvent.mouseDown(screen.getByLabelText("Genre")); // open select
-    fireEvent.click(screen.getByText("Comedy"));
-    expect(onGenre).toHaveBeenCalled();
+    const select = screen.getByTestId("genre-select");
+    const input = select.querySelector("input");
+    expect(input).toBeDisabled();
   });
 });

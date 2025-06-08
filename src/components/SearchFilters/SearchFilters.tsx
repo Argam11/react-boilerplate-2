@@ -38,6 +38,7 @@ export const SearchFilters = ({
       <FormControl sx={{ minWidth: "200px" }}>
         <InputLabel id="genre-select-label">Genre</InputLabel>
         <Select
+          data-testid="genre-select"
           labelId="genre-select-label"
           id="genre-select"
           label="Genre"
