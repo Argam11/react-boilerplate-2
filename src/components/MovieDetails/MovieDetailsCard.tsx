@@ -1,22 +1,5 @@
 import { Avatar, Box, Card, Typography } from "@mui/material";
-
-interface MovieDetailsCardProps {
-  data:
-    | {
-        title: string;
-        overview: string;
-        release_date: string;
-        runtime: number;
-        genres: { id: number; name: string }[];
-      }
-    | null
-    | undefined;
-  casts: {
-    id: number;
-    name: string;
-    profile_path: string | null;
-  }[];
-}
+import { MovieDetailsCardProps } from "./types";
 
 export const MovieDetailsCard = ({ data, casts }: MovieDetailsCardProps) => {
   return (

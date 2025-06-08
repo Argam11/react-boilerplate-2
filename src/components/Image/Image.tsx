@@ -1,10 +1,14 @@
+import { PLACEHOLDER_IMAGE_PATH } from "@constants/common";
+
 interface ImageProps {
-  path?: string | null;
+  src?: string;
   title?: string;
   style?: React.CSSProperties;
 }
 
-export const Image = ({ path, title = "", style }: ImageProps) => {
+export const Image = ({ src, title = "Image", style, ...rest }: ImageProps) => {
+  const validSrc = src || PLACEHOLDER_IMAGE_PATH;
+
   return (
     <img
       style={{
@@ -14,12 +18,13 @@ export const Image = ({ path, title = "", style }: ImageProps) => {
         minHeight: "300px",
         ...style,
       }}
-      src={`https://image.tmdb.org/t/p/w342/${path}`}
+      src={validSrc}
       alt={title}
       loading="lazy"
       onError={(e) => {
-        e.currentTarget.src = "/assets/image-placeholder.jpg";
+        e.currentTarget.src = PLACEHOLDER_IMAGE_PATH;
       }}
+      {...rest}
     />
   );
 };

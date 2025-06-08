@@ -7,6 +7,7 @@ interface LoadingProps {
 export const Loading = ({ mode = "full" }: LoadingProps) => {
   return (
     <Box
+      data-testid="loading"
       sx={{
         display: "flex",
         justifyContent: "center",

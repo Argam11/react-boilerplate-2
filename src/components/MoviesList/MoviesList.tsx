@@ -4,15 +4,16 @@ import { VirtuosoGrid } from "react-virtuoso";
 import { Box, SelectChangeEvent, Typography } from "@mui/material";
 import { useMovies } from "@api/MoviesList/useMovies";
 import { useDebounce } from "@hooks/useDebounce";
-import { SearchFilters } from "./SearchFilters";
-import { List, Item } from "./List";
+import { SearchFilters } from "@components/SearchFilters";
+import { MovieGridItem } from "./MovieGridItem";
 import { Loading } from "../Loading";
 import { MovieCard } from "./MovieCard";
+import { MovieGrid } from "./MovieGrid";
 
 const gridComponents = {
-  List,
-  Item,
-};
+  List: MovieGrid,
+  Item: MovieGridItem,
+} as const;
 
 export const MoviesList = () => {
   const [search, setSearch] = useState<string>("");

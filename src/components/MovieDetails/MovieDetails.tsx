@@ -6,21 +6,29 @@ import {
   useMovieCredits,
   useMovieTrailers,
 } from "@/api/MovieDetails/useMovieDetails";
-import { Trailers } from "./Trailers";
 import { Loading } from "../Loading";
 import { MovieDetailsCard } from "./MovieDetailsCard";
 import { Image } from "../Image";
+import { Trailers } from "@components/Trailers";
+import { useRedirectToNotFound } from "@/hooks/useRedirectToNotFound";
+import { MOVIE_POSTER_SRC_BASE } from "@/constants/common";
 
 export const MovieDetails = () => {
+  const navigate = useNavigate();
   const { id = "" } = useParams<{ id: string }>();
-  const { data: movie, isLoading } = useMovieDetails(id);
+
+  const {
+    data: movie,
+    isLoading: isMovieLoading,
+    error: movieError,
+  } = useMovieDetails(id);
+
   const { data: credits } = useMovieCredits(id);
   const { data: trailers } = useMovieTrailers(id);
-  const navigate = useNavigate();
 
   const trailersList = trailers?.results?.filter(
     (trailer) =>
-      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key,
+      trailer.site === "YouTube" && trailer.type === "Trailer" && trailer.key
   );
 
   const casts = credits?.cast?.slice(0, 5) || [];
@@ -29,34 +37,41 @@ export const MovieDetails = () => {
     navigate(-1);
   };
 
-  if (isLoading) return <Loading mode="inline" />;
+  useRedirectToNotFound(movieError, movie, isMovieLoading);
+
+  if (isMovieLoading) return <Loading mode="inline" />;
 
   return (
-    <Box sx={{ padding: "20px" }}>
-      <Box>
-        <IconButton
-          onClick={handleBack}
-          sx={{
-            color: (theme) => theme.palette.text.primary,
-            marginBottom: "20px",
-          }}
-        >
-          <ArrowBackIcon />
-        </IconButton>
-        <Box
-          display="flex"
-          gap={2}
-          sx={{
-            flexDirection: { xs: "column", md: "row" },
-          }}
-        >
-          <Box>
-            <Image path={movie?.poster_path} title={movie?.title} />
+    !!movie && (
+      <Box sx={{ padding: "20px" }}>
+        <Box>
+          <IconButton
+            onClick={handleBack}
+            sx={{
+              color: (theme) => theme.palette.text.primary,
+              marginBottom: "20px",
+            }}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+          <Box
+            display="flex"
+            gap={2}
+            sx={{
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
+            <Box>
+              <Image
+                src={`${MOVIE_POSTER_SRC_BASE}${movie.poster_path}`}
+                title={movie?.title}
+              />
+            </Box>
+            <MovieDetailsCard data={movie} casts={casts} />
           </Box>
-          <MovieDetailsCard data={movie} casts={casts} />
         </Box>
+        {!!trailersList?.length && <Trailers data={trailersList} />}
       </Box>
-      {!!trailersList?.length && <Trailers data={trailersList} />}
-    </Box>
+    )
   );
 };

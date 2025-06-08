@@ -4,26 +4,11 @@ import { Box, Typography } from "@mui/material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./Trailers.css";
-import { TrailerPlayer } from "./TrailerPlayer";
-
-const settings = {
-  infinite: true,
-  speed: 500,
-  slidesToShow: 3,
-  draggable: false,
-  className: "slick-slider",
-};
-
-interface Trailer {
-  key: string;
-  name: string;
-  site: string;
-  type: string;
-}
-
-interface TrailersProps {
-  data: Trailer[];
-}
+import { YouTubeVideoModal } from "@components/YouTubeVideoModal";
+import { Image } from "@components/Image";
+import { Trailer, TrailersProps } from "./types";
+import { SLICK_SLIDER_SETTINGS } from "./constants";
+import { YOUTUBE_THUMBNAIL_BASE_URL } from "@/constants/common";
 
 export const Trailers = ({ data }: TrailersProps) => {
   const [activeTrailer, setActiveTrailer] = useState<Trailer | null>(null);
@@ -51,14 +36,14 @@ export const Trailers = ({ data }: TrailersProps) => {
           sx={{ paddingBlock: "10px", outline: "none", cursor: "pointer" }}
           onClick={() => handleOpen(data[0])}
         >
-          <img
-            src={`https://img.youtube.com/vi/${data[0].key}/maxresdefault.jpg`}
-            width="100%"
+          <Image
+            src={`${YOUTUBE_THUMBNAIL_BASE_URL}${data[0].key}/maxresdefault.jpg`}
+            style={{ minHeight: "auto" }}
           />
-          <h3>{data[0].name}</h3>
+          <Typography variant="h3">{data[0].name}</Typography>
         </Box>
       ) : (
-        <Slider {...settings}>
+        <Slider {...SLICK_SLIDER_SETTINGS}>
           {data?.map((trailer) => {
             return (
               <Box
@@ -68,21 +53,19 @@ export const Trailers = ({ data }: TrailersProps) => {
                   handleOpen(trailer);
                 }}
               >
-                <img
-                  src={`https://img.youtube.com/vi/${trailer.key}/maxresdefault.jpg`}
-                  width="100%"
-                  alt={trailer.name}
-                  loading="lazy"
+                <Image
+                  src={`${YOUTUBE_THUMBNAIL_BASE_URL}${trailer.key}/maxresdefault.jpg`}
+                  title={trailer.name}
                   style={{ cursor: "pointer" }}
                 />
-                <h3>{trailer.name}</h3>
+                <Typography variant="h3">{trailer.name}</Typography>
               </Box>
             );
           })}
         </Slider>
       )}
       {activeTrailer && (
-        <TrailerPlayer
+        <YouTubeVideoModal
           videoKey={activeTrailer?.key}
           name={activeTrailer?.name}
           onClose={handleClose}

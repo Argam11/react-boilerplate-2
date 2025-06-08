@@ -1,11 +1,8 @@
-import { Movie } from "@/api/types";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Box, Card, CardContent, Typography } from "@mui/material";
 import { useNavigate } from "react-router";
 import { Image } from "../Image";
-
-interface MovieCardProps {
-  item: Movie;
-}
+import { MovieCardProps } from "./types";
+import { MOVIE_POSTER_SRC_BASE } from "@/constants/common";
 
 export const MovieCard = ({ item }: MovieCardProps) => {
   const navigate = useNavigate();
@@ -16,11 +13,12 @@ export const MovieCard = ({ item }: MovieCardProps) => {
 
   return (
     <Card
+      role="button"
       sx={{ cursor: "pointer", height: "100%" }}
       onClick={() => handleNavigate(item.id)}
     >
       <Image
-        path={item.poster_path}
+        src={`${MOVIE_POSTER_SRC_BASE}${item.poster_path}`}
         title={item.title}
         style={{ height: 300 }}
       />
@@ -62,8 +60,8 @@ export const MovieCard = ({ item }: MovieCardProps) => {
             alignItems: "center",
           }}
         >
-          <span>{item?.release_date}</span>
-          <span>{Math.round(item?.vote_average * 10) / 10}</span>
+          <Box component="span">{item.release_date}</Box>
+          <Box component="span">{Math.round(item?.vote_average * 10) / 10}</Box>
         </Typography>
       </CardContent>
     </Card>

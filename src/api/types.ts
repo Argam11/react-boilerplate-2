@@ -33,13 +33,15 @@ export interface MovieDetailsApi {
   runtime: number;
   genres: { id: number; name: string }[];
 }
+
+export interface Cast {
+  id: number;
+  name: string;
+  profile_path: string | null;
+}
 export interface MovieCreditsApi {
   id: number;
-  cast: {
-    id: number;
-    name: string;
-    profile_path: string | null;
-  }[];
+  cast: Cast[];
 }
 export interface MovieTrailersApi {
   id: number;

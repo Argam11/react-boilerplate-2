@@ -1,16 +1,12 @@
 import { Box, Modal } from "@mui/material";
+import { YOUTUBE_SRC_BASE } from "@constants/common";
+import { YouTubeVideoModalProps } from "./types";
 
-interface TrailerPlayerProps {
-  videoKey: string;
-  name: string;
-  onClose: () => void;
-}
-
-export const TrailerPlayer = ({
+export const YouTubeVideoModal = ({
   videoKey,
   name,
   onClose,
-}: TrailerPlayerProps) => (
+}: YouTubeVideoModalProps) => (
   <Modal
     open={!!videoKey}
     onClose={onClose}
@@ -25,9 +21,8 @@ export const TrailerPlayer = ({
       <iframe
         width="100%"
         height="100%"
-        src={`https://www.youtube.com/embed/${videoKey}`}
+        src={`${YOUTUBE_SRC_BASE}${videoKey}`}
         title={name}
-        frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
       />

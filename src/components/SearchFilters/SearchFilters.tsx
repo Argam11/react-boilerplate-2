@@ -5,16 +5,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   TextField,
 } from "@mui/material";
-
-interface SearchFiltersProps {
-  search?: string;
-  genre?: number;
-  onChangeSearch?: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  onChangeGenre?: (event: SelectChangeEvent<number>) => void;
-}
+import { SearchFiltersProps } from "./types";
 
 export const SearchFilters = ({
   search,
